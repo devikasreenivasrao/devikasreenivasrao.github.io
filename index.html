@@ -1,0 +1,2211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Personal portfolio of Devika Sreenivasa Rao — Cybersecurity Researcher & Usable Security Specialist.">
+  <title>Devika Sreenivasa Rao</title>
+  <style>
+    @import url('https://api.fontshare.com/v2/css?f[]=supreme@400,500,700,800&display=swap');
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-bg: #0a0a0a;
+      --color-text: #e8e8e8;
+      --color-text-muted: #888;
+      --color-accent: #6a998c;
+      --color-accent-glow: rgba(106, 153, 140, 0.4);
+      --color-surface: rgba(255, 255, 255, 0.03);
+      --color-border: rgba(255, 255, 255, 0.08);
+      --nav-bg: transparent;
+      --nav-border: transparent;
+      --project-hover: rgba(106, 153, 140, 0.06);
+      --font-display: 'Supreme', sans-serif;
+      --font-body: 'Supreme', sans-serif;
+    }
+
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-body);
+      transition: background 0.4s, color 0.4s;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .accent {
+      color: var(--color-accent);
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--nav-border);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease, background 0.3s, backdrop-filter 0.3s;
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+
+    nav.header-visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    nav.scrolled {
+      background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+      backdrop-filter: blur(12px);
+      border-bottom-color: var(--color-border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--color-accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--color-accent);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--color-text);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 3rem;
+      position: relative;
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -2px;
+    }
+
+    .hero-name .accent {
+      color: var(--color-accent);
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      color: var(--color-text-muted);
+      margin-top: 0.8rem;
+      height: 2.5rem;
+    }
+
+    .text-slider {
+      display: inline-grid;
+    }
+
+    .text-slider span {
+      grid-area: 1 / 1;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideText 9s infinite;
+      color: var(--color-accent);
+    }
+
+    .text-slider span:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .text-slider span:nth-child(2) {
+      animation-delay: 3s;
+    }
+
+    .text-slider span:nth-child(3) {
+      animation-delay: 6s;
+    }
+
+    @keyframes slideText {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      5%,
+      28% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      33%,
+      100% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+    }
+
+    .hero-bio {
+      font-size: 1.1rem;
+      color: var(--color-text-muted);
+      margin-top: 1rem;
+      max-width: 520px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* SCROLL PROMPT */
+    .scroll-prompt {
+      position: absolute;
+      bottom: 40px;
+      left: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      opacity: 0.6;
+    }
+
+    .scroll-prompt span {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--color-text-muted);
+      writing-mode: vertical-lr;
+      margin-top: 10px;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line-dash {
+      width: 1px;
+      height: 15px;
+      background: var(--color-accent);
+      position: absolute;
+      top: -15px;
+      animation: scrollDash 2s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+    }
+
+    @keyframes scrollDash {
+      0% {
+        top: -15px;
+      }
+
+      50% {
+        top: 50px;
+      }
+
+      100% {
+        top: 50px;
+      }
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s, color 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 20px var(--color-accent-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px var(--color-accent-glow);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text);
+      border: 1.5px solid var(--color-border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+
+    /* SECTIONS */
+    section {
+      min-height: 100vh;
+      padding: 100px 3rem 60px 3rem;
+      scroll-margin-top: 0;
+    }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--color-accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    /* SKILLS SECTION - TABS LAYOUT */
+    #skills>.reveal {
+      min-height: calc(100vh - 160px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .skills-layout {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3.5rem;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .skills-sidebar {
+      flex: 0 0 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      padding-right: 2rem;
+    }
+
+    .skill-tab {
+      background: var(--color-bg);
+      /* Solid black */
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: left;
+      color: var(--color-text-muted);
+      position: relative;
+      outline: none;
+    }
+
+    .skill-tab .dot {
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .skill-tab span {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .skill-tab:hover {
+      background: rgba(106, 153, 140, 0.03);
+      border-color: rgba(106, 153, 140, 0.2);
+      color: var(--color-text);
+    }
+
+    .skill-tab.active {
+      background: rgba(106, 153, 140, 0.05);
+      border-color: var(--color-accent);
+      color: #fff;
+    }
+
+    .skill-tab.active .dot {
+      background: var(--color-accent);
+      box-shadow: 0 0 8px var(--color-accent);
+    }
+
+    .skill-tab.active::after {
+      content: '';
+      position: absolute;
+      right: -2.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 28px;
+      background: var(--color-accent);
+      border-radius: 3px 0 0 3px;
+    }
+
+    .skills-content {
+      flex: 1;
+      min-height: 350px;
+    }
+
+    .skills-category-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #444;
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+
+    .skills-pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      opacity: 1;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .skills-pill-grid.switching {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    .skill-pill {
+      font-size: 0.95rem;
+      padding: 0.7rem 1.5rem;
+      background: rgba(106, 153, 140, 0.03);
+      border: 1px solid rgba(106, 153, 140, 0.25);
+      color: #6a998c;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      cursor: default;
+      font-weight: 500;
+    }
+
+    .skill-pill:hover {
+      background: rgba(106, 153, 140, 0.08);
+      border-color: var(--color-accent);
+      transform: translateY(-3px);
+      color: var(--color-accent);
+      box-shadow: 0 4px 15px rgba(106, 153, 140, 0.1);
+    }
+
+    @media (max-width: 900px) {
+      .skills-layout {
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+
+      .skills-sidebar {
+        flex: none;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding-right: 0;
+        padding-bottom: 1.5rem;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 1rem;
+      }
+
+      .skill-tab {
+        padding: 0.8rem 1.2rem;
+        flex: 0 0 auto;
+      }
+
+      .skill-tab.active::after {
+        display: none;
+      }
+    }
+
+
+    /* EXPERIENCE TIMELINE */
+    #experience {
+      /* Standard 100vh slide */
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-left: 40px;
+      list-style: none;
+    }
+
+    .timeline::before {
+      display: none;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: -12px;
+      width: 1px;
+      background: rgba(106, 153, 140, 0.25);
+    }
+
+    .timeline-item:last-child::before {
+      bottom: auto;
+      height: 18px;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Staggered delays */
+    .timeline-item:nth-child(1) {
+      transition-delay: 0ms;
+    }
+
+    .timeline-item:nth-child(2) {
+      transition-delay: 40ms;
+    }
+
+    .timeline-item:nth-child(3) {
+      transition-delay: 80ms;
+    }
+
+    .timeline-item:nth-child(4) {
+      transition-delay: 120ms;
+    }
+
+    .timeline-item:nth-child(5) {
+      transition-delay: 160ms;
+    }
+
+    .timeline-item .dot {
+      width: 7px;
+      height: 7px;
+      background: #6a998c;
+      border-radius: 50%;
+      position: absolute;
+      left: -3.5px;
+      top: 15px;
+      z-index: 2;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .timeline-item .dot.active {
+      width: 10px;
+      height: 10px;
+      left: -5px;
+      top: 13.5px;
+      box-shadow: 0 0 0 3px rgba(106, 153, 140, 0.1);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0px rgba(106, 153, 140, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 0 0 5px rgba(106, 153, 140, 0);
+      }
+    }
+
+    .timeline-item .connector {
+      width: 18px;
+      height: 1px;
+      background: rgba(106, 153, 140, 0.25);
+      position: absolute;
+      left: 3.5px;
+      top: 18px;
+      transition: width 0.2s ease;
+    }
+
+    .timeline-item .content {
+      margin-left: 32px;
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      width: 100%;
+      background: var(--color-bg);
+      /* Solid black */
+      border: 1px solid var(--color-border);
+      transition: background 0.2s ease;
+    }
+
+    .timeline-item:hover .dot {
+      transform: scale(1.3);
+      box-shadow: 0 0 8px rgba(106, 153, 140, 0.4);
+    }
+
+    .timeline-item:hover .connector {
+      width: 22px;
+    }
+
+    .timeline-item:hover .company {
+      transform: translateX(3px);
+    }
+
+    .timeline-item:hover .content {
+      background: rgba(106, 153, 140, 0.04);
+    }
+
+    .timeline-item .type-label {
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #444444;
+      margin-bottom: 1px;
+      font-weight: 600;
+    }
+
+    .timeline-item .company-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1px;
+    }
+
+    .timeline-item .company {
+      font-size: 16px;
+      font-weight: 700;
+      color: #f0f0f0;
+      transition: transform 0.2s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .timeline-item .loc-badge {
+      font-size: 9px;
+      color: var(--color-text-muted);
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1px 5px;
+      border-radius: 12px;
+      border: 1px solid var(--color-border);
+    }
+
+    .timeline-item .current-badge {
+      background: rgba(106, 153, 140, 0.1);
+      border: 0.5px solid rgba(106, 153, 140, 0.4);
+      color: #6a998c;
+      font-size: 9px;
+      font-weight: 500;
+      border-radius: 20px;
+      padding: 1px 5px;
+      margin-left: 5px;
+    }
+
+    .timeline-item .date {
+      font-size: 12px;
+      color: #6a998c;
+      font-weight: 500;
+      margin-bottom: 1px;
+    }
+
+    .timeline-item .title {
+      font-size: 13.5px;
+      color: #777777;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+
+    .timeline-item .bullets {
+      display: none;
+    }
+
+    .timeline-item .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .timeline-item .tags span {
+      font-size: 9.5px;
+      padding: 1px 5px;
+      border: 1px solid rgba(106, 153, 140, 0.3);
+      color: rgba(106, 153, 140, 0.7);
+      background: rgba(106, 153, 140, 0.04);
+      border-radius: 3px;
+    }
+
+    @media (max-width: 640px) {
+      #experience {
+        padding: 48px 1.5rem;
+      }
+
+      .timeline {
+        padding-left: 30px;
+      }
+
+      .timeline-item::before {
+        background: rgba(106, 153, 140, 0.25);
+        bottom: -32px;
+      }
+
+      .timeline-item:last-child::before {
+        bottom: auto;
+        height: 27px;
+      }
+
+      .timeline-item {
+        margin-bottom: 32px;
+      }
+
+      .timeline-item .dot {
+        top: 22px;
+      }
+
+      .timeline-item .connector {
+        top: 26px;
+        width: 14px;
+      }
+
+      .timeline-item:hover .connector {
+        width: 20px;
+      }
+
+      .timeline-item .content {
+        margin-left: 24px;
+        padding: 1rem;
+      }
+
+      .timeline-item .company {
+        font-size: 15px;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .timeline-item .company-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .timeline-item .date,
+      .timeline-item .title,
+      .timeline-item .bullets li {
+        font-size: 11px;
+      }
+    }
+
+
+
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 1.2rem;
+    }
+
+    .featured-column {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    .projects-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+    }
+
+    .work-card {
+      position: relative;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
+      z-index: 2;
+    }
+
+    .work-card.featured {
+      height: 100%;
+      justify-content: center;
+    }
+
+    .work-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-4px);
+      border-color: rgba(106, 153, 140, 0.4);
+    }
+
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .work-index {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-accent);
+      opacity: 0.8;
+    }
+
+    .work-badge {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 2px 8px;
+      border: 1px solid var(--color-border);
+      border-radius: 20px;
+      color: var(--color-text-muted);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .work-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .work-card.featured .work-name {
+      font-size: 1.8rem;
+    }
+
+    .work-desc {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+      margin-bottom: 1rem;
+    }
+
+    .work-card.featured .work-desc {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .work-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: auto;
+    }
+
+    .work-tags span {
+      font-size: 0.65rem;
+      padding: 3px 10px;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      color: var(--color-accent);
+      background: rgba(106, 153, 140, 0.05);
+    }
+
+    /* WORK POPUP INTERACTION */
+    .project-popup {
+      position: fixed;
+      width: 280px;
+      background: var(--color-bg);
+      border: 1px solid rgba(106, 153, 140, 0.5);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 15px var(--color-accent-glow);
+      border-radius: 12px;
+      z-index: 1000;
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      overflow: hidden;
+    }
+
+    .project-popup.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .project-screenshot {
+      width: 100%;
+      height: 140px;
+    }
+
+    .project-popup-content {
+      padding: 1.5rem;
+    }
+
+    .project-popup-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-text);
+    }
+
+    .project-popup-desc {
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+
+    /* CERTIFICATIONS HYBRID LAYOUT */
+    .cert-hybrid-layout {
+      display: flex;
+      gap: 3.5rem;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .cert-stat-box {
+      flex: 0 0 240px;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: 3rem 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .cert-stat-num {
+      font-family: var(--font-display);
+      font-size: 5.5rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .cert-stat-label {
+      font-size: 0.8rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      font-weight: 600;
+    }
+
+    .cert-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .cert-list-item {
+      display: flex;
+      align-items: center;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: background 0.3s ease, padding-left 0.3s ease;
+    }
+
+    .cert-list-item:hover {
+      background: rgba(255, 255, 255, 0.01);
+      padding-left: 0.5rem;
+    }
+
+    .cert-list-item:last-child {
+      border-bottom: none;
+    }
+
+    .cert-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--color-accent);
+      border-radius: 50%;
+      margin-right: 1.2rem;
+      flex: none;
+    }
+
+    .cert-dot.purple {
+      background: #5a67d8;
+    }
+
+    .cert-list-name {
+      color: var(--color-text);
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    .cert-list-provider {
+      margin-left: auto;
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* CONTACT */
+    .contact-section {
+      min-height: auto;
+      padding: 4rem 3rem 2rem 3rem;
+    }
+
+    .contact-layout {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .contact-info {
+      text-align: left;
+    }
+
+    .contact-heading {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-text {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      max-width: 500px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .contact-layout {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .social-links a {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.3s, color 0.3s, transform 0.3s;
+    }
+
+    .social-links a:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+      transform: translateY(-3px);
+    }
+
+    .social-links svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+    }
+
+    /* BACK TO TOP BUTTON */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(106, 153, 140, 0.15);
+      border: 1px solid var(--color-accent);
+      color: var(--color-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: opacity 0.3s, background 0.3s, color 0.3s, transform 0.3s;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .back-to-top:hover {
+      background: var(--color-accent);
+      color: var(--color-bg);
+      transform: translateY(-3px);
+    }
+
+    .back-to-top svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* PROJECT MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 14, 20, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      padding: 1rem;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: #11151C;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 600px;
+      padding: 3rem;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-overlay.show .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--color-text-muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--color-text);
+    }
+
+    .modal-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-category {
+      display: block;
+      color: var(--color-accent);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin: 0;
+    }
+
+    .modal-desc {
+      color: var(--color-text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .modal-grid-item {
+      background: rgba(255, 255, 255, 0.02);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .modal-grid-label {
+      display: block;
+      color: var(--color-text-muted);
+      font-size: 0.75rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .modal-grid-val {
+      display: block;
+      color: var(--color-text);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .modal-grid-val.status-live {
+      color: #10B981;
+      /* green */
+    }
+
+    .modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 2rem;
+    }
+
+    .modal-tags span {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 0.8rem;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .modal-btn-primary {
+      background: var(--color-accent);
+      color: var(--color-bg);
+    }
+
+    .modal-btn-primary:hover {
+      background: #5ba38b;
+      transform: translateY(-2px);
+    }
+
+    .modal-btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--color-text);
+    }
+
+    .modal-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 640px) {
+      .modal-content {
+        padding: 2rem 1.5rem;
+      }
+
+      .modal-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-actions {
+        flex-direction: column;
+      }
+    }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px) scale(0.98);
+      filter: blur(5px);
+      transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+        filter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition-delay: calc(var(--stagger, 0) * 0.15s);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+
+    /* WORK CARD SPECIFIC REVEAL */
+    .work-card.reveal {
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      transition-delay: calc(var(--stagger, 0) * 0.15s);
+    }
+
+    .work-card.reveal.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .work-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+
+      .projects-container {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+
+      .work-card.featured {
+        min-height: 300px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: var(--color-bg);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      section,
+      .hero {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .projects-container {
+        grid-template-columns: 1fr;
+      }
+
+      .cert-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-name {
+        font-size: clamp(2.5rem, 8vw, 4rem);
+      }
+
+      .hero-bio {
+        font-size: 1rem;
+      }
+
+      .contact-heading {
+        font-size: clamp(2rem, 8vw, 2.5rem);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- BACKGROUND EFFECT -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Portfolio.</div>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+      <h1 class="hero-name">Devika <span class="accent">Sreenivasa Rao</span></h1>
+      <p class="hero-subtitle">
+        <span class="text-slider">
+          <span>Cybersecurity Researcher</span>
+          <span>Privacy & HCI Researcher</span>
+          <span>Cybersecurity Student</span>
+        </span>
+      </p>
+      <p class="hero-bio">I research how people make privacy decisions — and build systems that respect them. Based in
+        Saarbrücken, Germany.</p>
+    </div>
+
+    <div class="scroll-prompt">
+      <div class="scroll-line">
+        <div class="scroll-line-dash"></div>
+      </div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="reveal">
+      <p class="section-label">skills</p>
+      <h2 class="section-heading">Expertise & Tools</h2>
+
+      <div class="skills-layout reveal" style="--stagger: 0;">
+        <div class="skills-sidebar">
+          <button class="skill-tab active" data-category="security">
+            <span>Security & Governance</span>
+          </button>
+          <button class="skill-tab" data-category="research">
+            <span>Research Methods</span>
+          </button>
+          <button class="skill-tab" data-category="tools">
+            <span>Programming Tools & Frameworks</span>
+          </button>
+          <button class="skill-tab" data-category="documentation">
+            <span>Documentation & Communication</span>
+          </button>
+          <button class="skill-tab" data-category="languages">
+            <span>Languages</span>
+          </button>
+        </div>
+
+        <div class="skills-content">
+          <div class="skills-category-label" id="current-category-name">SECURITY & GOVERNANCE</div>
+          <div class="skills-pill-grid" id="skills-pill-grid">
+            <!-- Dynamic Content -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="reveal">
+      <p class="section-label">experience</p>
+      <h2 class="section-heading">Career Timeline</h2>
+    </div>
+
+    <div class="reveal" style="--stagger: 1;">
+      <ul class="timeline">
+        <!-- Entry 1 -->
+        <li class="timeline-item reveal" style="--stagger: 0;">
+          <div class="dot active"></div>
+          <div class="connector"></div>
+          <div class="content">
+            <div class="type-label">Research</div>
+            <div class="company-row">
+              <div class="company">CISPA Helmholtz Center for Information Security <span
+                  class="current-badge">Current</span></div>
+              <div class="loc-badge">Saarbrücken, Germany</div>
+            </div>
+            <div class="date">October 2025 – Present</div>
+            <div class="title">Research Assistant - Usable Security & Privacy</div>
+            <div class="tags">
+              <span>Qualitative Research</span><span>Mixed Methods</span><span>Privacy</span><span>Usable
+                Security</span><span>Prolific</span><span>IRB</span>
+            </div>
+          </div>
+        </li>
+
+        <!-- Entry 2 -->
+        <li class="timeline-item reveal" style="--stagger: 1;">
+          <div class="dot"></div>
+          <div class="connector"></div>
+          <div class="content">
+            <div class="type-label">Research</div>
+            <div class="company-row">
+              <div class="company">Saarland University</div>
+              <div class="loc-badge">Saarbrücken, Germany</div>
+            </div>
+            <div class="date">October 2024 – September 2025</div>
+            <div class="title">Research Assistant (HiWi) - Secure Workflow Automation</div>
+            <div class="tags">
+              <span>Python</span><span>Automation</span><span>Data
+                Integrity</span><span>Confluence</span><span>Jira</span>
+            </div>
+          </div>
+        </li>
+
+        <!-- Entry 3 -->
+        <li class="timeline-item reveal" style="--stagger: 2;">
+          <div class="dot"></div>
+          <div class="connector"></div>
+          <div class="content">
+            <div class="type-label">Industry</div>
+            <div class="company-row">
+              <div class="company">Deloitte Australia</div>
+              <div class="loc-badge">Remote (Forage Program)</div>
+            </div>
+            <div class="date">June 2025</div>
+            <div class="title">Cybersecurity Intern</div>
+            <div class="tags">
+              <span>SOC</span><span>Incident Response</span><span>Log Analysis</span><span>Breach Investigation</span>
+            </div>
+          </div>
+        </li>
+
+        <!-- Entry 4 -->
+        <li class="timeline-item reveal" style="--stagger: 3;">
+          <div class="dot"></div>
+          <div class="connector"></div>
+          <div class="content">
+            <div class="type-label">Industry</div>
+            <div class="company-row">
+              <div class="company">PwC Switzerland</div>
+              <div class="loc-badge">Remote (Forage Program)</div>
+            </div>
+            <div class="date">March 2025</div>
+            <div class="title">Cybersecurity Intern</div>
+            <div class="tags">
+              <span>Risk Assessment</span><span>Security Posture</span><span>Technical Controls</span>
+            </div>
+          </div>
+        </li>
+
+        <!-- Entry 5 -->
+        <li class="timeline-item reveal" style="--stagger: 4;">
+          <div class="dot"></div>
+          <div class="connector"></div>
+          <div class="content">
+            <div class="type-label">Industry</div>
+            <div class="company-row">
+              <div class="company">Mastercard</div>
+              <div class="loc-badge">Remote (Forage Program)</div>
+            </div>
+            <div class="date">September 2024</div>
+            <div class="title">Cybersecurity Intern</div>
+            <div class="tags">
+              <span>Phishing Analysis</span><span>SOC Simulation</span><span>User Behaviour</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="reveal">
+      <p class="section-label">WORK</p>
+      <h2 class="section-heading">Selected Work</h2>
+
+      <div class="work-grid">
+        <!-- FEATURED PROJECTS COLUMN -->
+        <div class="featured-column">
+          <div class="work-card featured reveal" data-project-id="exam-scheduler" style="--stagger: 0;">
+            <div class="work-header">
+              <span class="work-index">01</span>
+              <span class="work-badge">Deployed</span>
+            </div>
+            <h3 class="work-name">Exam Scheduling System</h3>
+            <p class="work-desc">Conflict-free timetabling deployed for active university use with Role-Based Access
+              Control.</p>
+            <div class="work-tags">
+              <span>Python</span><span>SQL</span><span>RBAC</span>
+            </div>
+          </div>
+
+          <div class="work-card featured reveal" data-project-id="bidsecure" style="--stagger: 1;">
+            <div class="work-header">
+              <span class="work-index">02</span>
+              <span class="work-badge">Security</span>
+            </div>
+            <h3 class="work-name">Secure Auction Platform</h3>
+            <p class="work-desc">Real-time bidding with access control and bid integrity, addressing replay attacks.</p>
+            <div class="work-tags">
+              <span>JavaScript</span><span>Access Control</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT GRID -->
+        <div class="projects-container">
+
+          <div class="work-card reveal" style="--stagger: 2;">
+            <div class="work-header">
+              <span class="work-index">03</span>
+              <span class="work-badge">HCI</span>
+            </div>
+            <h3 class="work-name">Student Management LMS</h3>
+            <p class="work-desc">Designed and prototyped in Figma with iterative usability testing with real users.</p>
+            <div class="work-tags">
+              <span>Figma</span><span>Usability Testing</span>
+            </div>
+          </div>
+
+          <div class="work-card reveal" style="--stagger: 3;">
+            <div class="work-header">
+              <span class="work-index">04</span>
+              <span class="work-badge">Seminar</span>
+            </div>
+            <h3 class="work-name">Usable Security & Privacy</h3>
+            <p class="work-desc">How authentication design shapes user behaviour — passwords, PINs, and biometrics.</p>
+            <div class="work-tags">
+              <span>Usable Security</span><span>HCI</span>
+            </div>
+          </div>
+
+          <div class="work-card reveal" style="--stagger: 4;">
+            <div class="work-header">
+              <span class="work-index">05</span>
+              <span class="work-badge">Seminar</span>
+            </div>
+            <h3 class="work-name">Hyperledger Fabric</h3>
+            <p class="work-desc">Enterprise blockchain architecture, access control mechanisms, and data governance.</p>
+            <div class="work-tags">
+              <span>Blockchain</span><span>Security</span>
+            </div>
+          </div>
+
+          <div class="work-card reveal" style="--stagger: 5;">
+            <div class="work-header">
+              <span class="work-index">06</span>
+              <span class="work-badge">Seminar</span>
+            </div>
+            <h3 class="work-name">EROS Capability System</h3>
+            <p class="work-desc">Fine-grained access control in a capability-based OS and its effectiveness against
+              vulnerabilities.</p>
+            <div class="work-tags">
+              <span>OS Security</span><span>Access Control</span>
+            </div>
+          </div>
+
+          <div class="work-card reveal" style="--stagger: 6;">
+            <div class="work-header">
+              <span class="work-index">07</span>
+              <span class="work-badge">Research</span>
+            </div>
+            <h3 class="work-name">Interview Studies in CS</h3>
+            <p class="work-desc">Semi-structured interview design as a method in HCI, usable security, and privacy
+              research.</p>
+            <div class="work-tags">
+              <span>Qualitative Research</span><span>HCI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="reveal">
+      <p class="section-label">continuous learning</p>
+      <h2 class="section-heading">Certifications</h2>
+      <div class="cert-hybrid-layout">
+        <div class="cert-stat-box reveal" style="--stagger: 0;">
+          <div class="cert-stat-num">8</div>
+          <div class="cert-stat-label">Certifications</div>
+        </div>
+        <div class="cert-list">
+          <div class="cert-list-item reveal" style="--stagger: 1;">
+            <div class="cert-dot"></div>
+            <span class="cert-list-name">Data Privacy Fundamentals</span>
+            <span class="cert-list-provider">Coursera</span>
+          </div>
+          <div class="cert-list-item reveal" style="--stagger: 2;">
+            <div class="cert-dot"></div>
+            <span class="cert-list-name">Digital Wellbeing & Security</span>
+            <span class="cert-list-provider">FutureLearn</span>
+          </div>
+          <div class="cert-list-item reveal" style="--stagger: 3;">
+            <div class="cert-dot"></div>
+            <span class="cert-list-name">Python & Data Science</span>
+            <span class="cert-list-provider">Coursera</span>
+          </div>
+          <div class="cert-list-item reveal" style="--stagger: 4;">
+            <div class="cert-dot"></div>
+            <span class="cert-list-name">Secure Software Development</span>
+            <span class="cert-list-provider">TryHackMe</span>
+          </div>
+          <div class="cert-list-item reveal" style="--stagger: 5;">
+            <div class="cert-dot"></div>
+            <span class="cert-list-name">Ethical Hacking</span>
+            <span class="cert-list-provider">Red Team Hacker Academy</span>
+          </div>
+          <div class="cert-list-item reveal" style="--stagger: 6;">
+            <div class="cert-dot"></div>
+            <span class="cert-list-name">Advanced Linux Skills</span>
+            <span class="cert-list-provider">Red Hat</span>
+          </div>
+          <div class="cert-list-item reveal" style="--stagger: 7;">
+            <div class="cert-dot"></div>
+            <span class="cert-list-name">Android Development</span>
+            <span class="cert-list-provider">Coursera</span>
+          </div>
+          <div class="cert-list-item reveal" style="--stagger: 8;">
+            <div class="cert-dot"></div>
+            <span class="cert-list-name">IELTS 8.5 — C2 English</span>
+            <span class="cert-list-provider">British Council</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section">
+    <div class="reveal">
+      <div class="contact-layout">
+        <div class="contact-info">
+          <h2 class="contact-heading">Let's build something secure.</h2>
+          <p class="contact-text">Open to research collaborations, internships, and full-time roles in cybersecurity and
+            privacy.</p>
+        </div>
+        <div class="social-links">
+          <a href="https://github.com/devikasreenivasrao" target="_blank" aria-label="GitHub">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/devikasrao" target="_blank" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
+          <a href="mailto:devikasreenivasarao@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACK TO TOP BUTTON -->
+  <a href="#" class="back-to-top" id="back-to-top" aria-label="Back to Top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg>
+  </a>
+
+  <!-- FOOTER -->
+  <footer>Devika Sreenivasa Rao · 2026 · Saarbrücken</footer>
+
+  <!-- PROJECT MODAL OVERLAY -->
+  <div id="project-modal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close Modal">&times;</button>
+
+      <div class="modal-header">
+        <span class="modal-category" id="modal-category">SECURITY &middot; JAVASCRIPT</span>
+        <h2 class="modal-title" id="modal-title">Secure Auction Platform</h2>
+      </div>
+
+      <p class="modal-desc" id="modal-desc">
+        Real-time bidding platform demonstrating core web security concepts. Features dual Safe/Vulnerable mode showing
+        XSS attack simulation and prevention side by side. Includes RBAC, JWT auth simulation, and a live security
+        logging dashboard.
+      </p>
+
+      <div class="modal-grid">
+        <div class="modal-grid-item">
+          <span class="modal-grid-label">Type</span>
+          <span class="modal-grid-val" id="modal-type">Security Demo</span>
+        </div>
+        <div class="modal-grid-item">
+          <span class="modal-grid-label">Stack</span>
+          <span class="modal-grid-val" id="modal-stack">Next.js, TypeScript</span>
+        </div>
+        <div class="modal-grid-item">
+          <span class="modal-grid-label">Year</span>
+          <span class="modal-grid-val" id="modal-year">2023 (rebuilt 2025)</span>
+        </div>
+        <div class="modal-grid-item">
+          <span class="modal-grid-label">Status</span>
+          <span class="modal-grid-val status-live" id="modal-status">Live</span>
+        </div>
+      </div>
+
+      <div class="modal-tags" id="modal-tags">
+        <span>XSS Prevention</span>
+        <span>RBAC</span>
+        <span>JWT</span>
+        <span>Security Logging</span>
+      </div>
+
+      <div class="modal-actions">
+        <a id="modal-live-btn" target="_blank" class="modal-btn modal-btn-primary">View Live Demo &nearr;</a>
+        <a id="modal-github-btn" target="_blank" class="modal-btn modal-btn-secondary">View on GitHub &nearr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RADAR TOOLTIP -->
+  <div id="radar-tooltip" class="radar-tooltip">
+    <div class="tooltip-title" id="tt-title"></div>
+    <div class="tooltip-score" id="tt-score"></div>
+    <div class="tooltip-desc" id="tt-desc"></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // ─── MAGNETIC FIELD CANVAS ───
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let mouse = { x: -1000, y: -1000 };
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      window.addEventListener('mousemove', e => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        const spacing = 50;
+
+        for (let x = 25; x < width; x += spacing) {
+          for (let y = 25; y < height; y += spacing) {
+            const dx = mouse.x - x;
+            const dy = mouse.y - y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const angle = Math.atan2(dy, dx);
+
+            // Interaction: Dashes point to mouse and get brighter
+            const length = 12;
+            const opacity = Math.max(0.05, 0.4 - dist / 600);
+
+            ctx.strokeStyle = `rgba(106, 153, 140, ${opacity})`;
+            ctx.lineWidth = 1.5;
+
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + Math.cos(angle) * length, y + Math.sin(angle) * length);
+            ctx.stroke();
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+
+      // ─── NAV SCROLL & REVEAL ───
+      const nav = document.querySelector('nav');
+      const hero = document.getElementById('hero');
+      const heroInner = document.querySelector('.hero-inner');
+      const scrollPrompt = document.querySelector('.scroll-prompt');
+
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+
+        // Reveal header once almost reached skills
+        const revealThreshold = hero.offsetHeight * 0.6;
+        nav.classList.toggle('header-visible', scrolled > revealThreshold);
+        nav.classList.toggle('scrolled', scrolled > 80);
+
+        // Hero fade-out & parallax
+        if (scrolled < hero.offsetHeight) {
+          const opacity = Math.max(0, 1 - scrolled / 500);
+          const yPos = scrolled * 0.3;
+          heroInner.style.opacity = opacity;
+          heroInner.style.transform = `translateY(${yPos}px)`;
+
+          if (scrollPrompt) {
+            scrollPrompt.style.opacity = Math.max(0, 1 - scrolled / 150);
+          }
+        }
+
+        // Back to top visibility
+        const backToTop = document.getElementById('back-to-top');
+        if (backToTop) {
+          if (scrolled > 500) {
+            backToTop.classList.add('visible');
+          } else {
+            backToTop.classList.remove('visible');
+          }
+        }
+      });
+
+      // Smooth scroll for back to top
+      const backToTopBtn = document.getElementById('back-to-top');
+      if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // ─── HAMBURGER ───
+      const hamburger = document.querySelector('.hamburger');
+      const navLinks = document.querySelector('.nav-links');
+      hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+      navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+      // ─── SCROLL REVEAL ───
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+      }, { threshold: 0.15 });
+      reveals.forEach(el => observer.observe(el));
+
+      // ─── ACTIVE NAV LINK ───
+      const sections = document.querySelectorAll('section[id], .hero[id]');
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => {
+          if (window.scrollY >= s.offsetTop - 200) current = s.id;
+        });
+        document.querySelectorAll('.nav-links a').forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+        });
+      });
+
+      // ─── SMOOTH SCROLL ───
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          const target = document.querySelector(a.getAttribute('href'));
+          if (target) target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      // ─── WORK CARD POPUP ───
+      let popupTimeout;
+      const popup = document.createElement('div');
+      popup.className = 'project-popup';
+      popup.innerHTML = `
+    <div class="project-screenshot" id="popup-gradient"></div>
+    <div class="project-popup-content">
+      <div class="project-popup-name" id="popup-name"></div>
+      <div class="project-popup-desc" id="popup-desc"></div>
+    </div>
+  `;
+      document.body.appendChild(popup);
+
+      document.querySelectorAll('.work-card').forEach(card => {
+        card.addEventListener('mouseenter', (e) => {
+          const title = card.getAttribute('data-popup-title');
+          const desc = card.getAttribute('data-popup-desc');
+          const gradient = card.getAttribute('data-popup-gradient');
+
+          popupTimeout = setTimeout(() => {
+            document.getElementById('popup-name').textContent = title;
+            document.getElementById('popup-desc').textContent = desc;
+            document.getElementById('popup-gradient').style.background = gradient;
+
+            const rect = card.getBoundingClientRect();
+            const popupWidth = 280;
+
+            let top = rect.top;
+            let left = rect.right + 20;
+
+            if (rect.right + popupWidth + 40 > window.innerWidth) {
+              left = rect.left - popupWidth - 20;
+            }
+            if (left < 10) left = 10;
+
+            // Temporarily display to get correct height
+            popup.style.display = 'block';
+            const popupHeight = popup.offsetHeight || 220;
+
+            if (top + popupHeight + 20 > window.innerHeight) {
+              top = window.innerHeight - popupHeight - 20;
+            }
+            if (top < 10) top = 10;
+
+            popup.style.top = top + 'px';
+            popup.style.left = left + 'px';
+            popup.classList.add('show');
+          }, 2000);
+        });
+
+        card.addEventListener('mouseleave', () => {
+          clearTimeout(popupTimeout);
+          popup.classList.remove('show');
+        });
+      });
+
+      // ─── PROJECT MODAL LOGIC ───
+      const projectDetailsData = {
+        'bidsecure': {
+          category: 'SECURITY &middot; TYPESCRIPT',
+          title: 'Secure Auction Platform',
+          desc: 'Real-time bidding platform demonstrating core web security concepts. Features dual Safe/Vulnerable mode showing XSS attack simulation and prevention side by side. Includes RBAC, JWT auth simulation, and a live security logging dashboard.',
+          type: 'Security Demo',
+          stack: 'Next.js, TypeScript',
+          year: '2023 (rebuilt 2025)',
+          status: 'Live',
+          tags: ['XSS Prevention', 'RBAC', 'JWT', 'Security Logging'],
+          liveLink: 'https://bidsecure.vercel.app/',
+          githubLink: 'https://github.com/devikasreenivasrao/bidsecure.git'
+        },
+        'exam-scheduler': {
+          category: 'PYTHON &middot; SQL',
+          title: 'Exam Scheduling System',
+          desc: 'Conflict-free timetabling deployed for active university use with Role-Based Access Control.',
+          type: 'Production App',
+          stack: 'Python, SQL',
+          year: '2023',
+          status: 'Deployed',
+          tags: ['Python', 'SQL', 'RBAC'],
+          liveLink: '#',
+          githubLink: '#'
+        }
+      };
+
+      const projectModal = document.getElementById('project-modal');
+      const modalClose = document.querySelector('.modal-close');
+
+      document.querySelectorAll('.work-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const projectId = card.getAttribute('data-project-id');
+          if (projectId && projectDetailsData[projectId]) {
+            const data = projectDetailsData[projectId];
+
+            document.getElementById('modal-category').innerHTML = data.category;
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-desc').textContent = data.desc;
+
+            document.getElementById('modal-type').textContent = data.type;
+            document.getElementById('modal-stack').textContent = data.stack;
+            document.getElementById('modal-year').textContent = data.year;
+
+            const statusEl = document.getElementById('modal-status');
+            statusEl.textContent = data.status;
+            if (data.status.toLowerCase() === 'live' || data.status.toLowerCase() === 'deployed') {
+              statusEl.style.color = '#10B981';
+            } else {
+              statusEl.style.color = 'var(--color-text)';
+            }
+
+            const tagsContainer = document.getElementById('modal-tags');
+            tagsContainer.innerHTML = '';
+            data.tags.forEach(tag => {
+              const span = document.createElement('span');
+              span.textContent = tag;
+              tagsContainer.appendChild(span);
+            });
+
+            const liveBtn = document.getElementById('modal-live-btn');
+            liveBtn.href = data.liveLink;
+            liveBtn.style.display = data.liveLink !== '#' ? 'block' : 'none';
+
+            const ghBtn = document.getElementById('modal-github-btn');
+            ghBtn.href = data.githubLink;
+            ghBtn.style.display = data.githubLink !== '#' ? 'block' : 'none';
+
+            projectModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+          }
+        });
+      });
+
+      function closeModal() {
+        projectModal.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+
+      if (modalClose) modalClose.addEventListener('click', closeModal);
+      if (projectModal) {
+        projectModal.addEventListener('click', (e) => {
+          if (e.target === projectModal) closeModal();
+        });
+      }
+
+      // ─── SKILLS TABS ───
+      const skillsData = {
+        security: {
+          name: "SECURITY & GOVERNANCE",
+          tags: ["Usable Security", "Privacy Decision-Making", "Human Factors in Security", "User Authentication", "Risk Assessment", "Vulnerability Analysis", "Incident Response", "Threat Analysis", "Digital Forensics", "SOC Workflows", "Access Control", "Data Classification", "Security Awareness", "Consent-Aware Systems"]
+        },
+        research: {
+          name: "RESEARCH METHODS",
+          tags: ["Semi-Structured Interviews", "Think-Aloud Studies", "Unmoderated Remote Testing (Prolific)", "Thematic Coding", "Mixed Methods", "Qualitative Research", "Study Design", "IRB/Ethics Protocols", "Affinity Mapping", "Statistical Analysis"]
+        },
+        tools: {
+          name: "PROGRAMMING TOOLS & FRAMEWORKS",
+          tags: ["Python", "SQL", "Java", "C/C++", "JavaScript", "HTML & CSS", "TypeScript", "Next.js", "JSON", "Linux", "Wireshark", "Figma", "MS Office", "Jira", "Confluence", "IIIF", "Hyperledger Fabric", "R (basic)"]
+        },
+        documentation: {
+          name: "DOCUMENTATION & COMMUNICATION",
+          tags: ["Academic Writing", "Project Management", "Interdisciplinary Communication", "Stakeholder Reporting", "Policy Documentation"]
+        },
+        languages: {
+          name: "LANGUAGES",
+          tags: ["English (C2)", "German (B1)", "Malayalam (Native)", "Tulu (Mother Tongue)", "Hindi (B2)"]
+        }
+      };
+
+      const skillTabs = document.querySelectorAll('.skill-tab');
+      const pillGrid = document.getElementById('skills-pill-grid');
+      const catLabel = document.getElementById('current-category-name');
+
+      function renderSkills(category) {
+        pillGrid.classList.add('switching');
+
+        setTimeout(() => {
+          pillGrid.innerHTML = '';
+          skillsData[category].tags.forEach(tag => {
+            const pill = document.createElement('div');
+            pill.className = 'skill-pill';
+            pill.textContent = tag;
+            pillGrid.appendChild(pill);
+          });
+          catLabel.textContent = skillsData[category].name;
+          pillGrid.classList.remove('switching');
+        }, 300);
+      }
+
+      skillTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          if (tab.classList.contains('active')) return;
+
+          document.querySelector('.skill-tab.active').classList.remove('active');
+          tab.classList.add('active');
+          renderSkills(tab.dataset.category);
+        });
+      });
+
+      // Initial render
+      renderSkills('security');
+    });
+  </script>
+</body>
+
+</html>
